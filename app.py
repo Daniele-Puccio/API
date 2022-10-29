@@ -24,7 +24,7 @@ def create_stores():
 
 ### CREATE ITEM
 @app.post("/item")
-def create_item(name):
+def create_item():
     item_data = request.get_json()
     if item_data['store_id'] not in stores:
         return {"message":"Store not found!"},404
@@ -36,15 +36,15 @@ def create_item(name):
 
 ### GET STORE WITH ID
 @app.get("/store/<string:store_id>")
-def get_store(name):
+def get_store(store_id):
     try:
-        return stores['store_id']
+        return stores[store_id]
     except KeyError:
         return {"message": "Store not found"}, 404
 
 ### GET ITEM WITH ID
 @app.get("/item/<string:item_id>")
-def get_item_in_store(name):
+def get_item(item_id):
     try:
         return items[item_id]
     except KeyError():
