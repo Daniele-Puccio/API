@@ -2,4 +2,7 @@
 !/REST_API
 !/app.py
 !/db.py
+!/resources
+!/db.py
+!/schema.py
 /*
