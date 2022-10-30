@@ -7,4 +7,6 @@
 !/schema.py
 !/requirements.txt
 !/models
-/*
+/__pycache__
+/venv
+/resources/__pycache__/*.pyc
