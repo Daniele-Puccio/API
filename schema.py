@@ -20,4 +20,4 @@ class StoreSchema(PlainStoreSchema):
 
 class ItemSchema(PlainItemSchema):
     store_id=fields.Str(required=True, load_only=True)
-    store = fields.nested(PlainStoreSchema(), dump_only=True)
+    store = fields.Nested(PlainStoreSchema(), dump_only=True)
