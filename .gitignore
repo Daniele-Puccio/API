@@ -10,3 +10,5 @@
 /__pycache__
 /venv
 /resources/__pycache__/*.pyc
+/venv/Lib
+/venv/Script
