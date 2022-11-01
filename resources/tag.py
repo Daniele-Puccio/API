@@ -24,6 +24,7 @@ class TagsInStore(MethodView):
             db.session.commit()
         except SQLAlchemyError as e:
             abort(500,message=str(e))
+        return tag
 
 @blp.route("/item/<string:item_id>/tag/<string:tag_id>")
 class LinkTagsToItem(MethodView):
@@ -57,7 +58,10 @@ class Tag(MethodView):
     def get(self,tag_id):
         tag = StoreModel.query.get_or_404(tag_id)
         return tag
-    
+
+    @blp.response(202,example={"message": "Tag deleted."})
+    @blp.response(404, description="Tag not found.")
+    @blp.response(400,description="Returnet if the tag is assigned to one or more items. In this case the tag is not deleted.")
     def delete(self,tag_id):
         tag = TagModel.sql.query_or_404(tag_id)
         if not tag.items:
