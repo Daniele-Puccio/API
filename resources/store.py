@@ -5,6 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from db import db
 from models import StoreModel
 from flask_smorest import Blueprint, abort
+from models.item import ItemModel
 from schema import StoreSchema
 
 blp = Blueprint("stores", __name__, description="Operations on stores")
@@ -18,17 +19,16 @@ class Store(MethodView):
 
     def delete(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
-        raise NotImplementedError("Deleting a store is not implemented.")
-
-    def put(self, store_id):
-        store = StoreModel.query.get_or_404(store_id)
-        raise NotImplementedError("Updating a store is not implemented.")
+        db.session.delete(store)
+        db.session.commit()
+        return{"message":"Store deleted."},200
 
 @blp.route("/store")
 class Store(MethodView):
     @blp.response(200,StoreSchema(many=True))
     def get(self):
-        return stores.values()
+        return StoreModel.query.all()
+
     @blp.response(201,StoreSchema)
     @blp.arguments(StoreSchema)
     def post(self,store_data):
