@@ -18,7 +18,7 @@ class TagsInStore(MethodView):
         store = StoreModel.query.get_or_404(store_id)
         return store.tags.all()
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.arguments(TagSchema)
     @blp.response(201,TagSchema)
     def post(self, tag_data,store_id):
@@ -33,7 +33,7 @@ class TagsInStore(MethodView):
 @blp.route("/item/<int:item_id>/tag/<int:tag_id>")
 class LinkTagsToItem(MethodView):
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.response(201,TagSchema)
     def post(self,item_id,tag_id):
         item=ItemModel.query.get_or_404(item_id)
@@ -46,7 +46,7 @@ class LinkTagsToItem(MethodView):
             abort(500,message="An error occurred while inserting the tag.")
         return tag
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.response(200, TagAndItemSchema)
     def delete(self, item_id, tag_id):
         item=ItemModel.query.get_or_404(item_id)
@@ -69,7 +69,7 @@ class Tag(MethodView):
         tag = StoreModel.query.get_or_404(tag_id)
         return tag
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.response(202,example={"message": "Tag deleted."})
     @blp.response(404, description="Tag not found.")
     @blp.response(400,description="Returnet if the tag is assigned to one or more items. In this case the tag is not deleted.")

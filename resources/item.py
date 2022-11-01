@@ -17,14 +17,14 @@ class Item(MethodView):
         item = ItemModel.query.get_or_404(item_id)
         return(item)
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(self,item_id):
         item = ItemModel.query.get_or_404(item_id)
         db.session.delete(item)
         db.session.commit()
         return {"message":"Item deleted. "}, 200
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.arguments(ItemUpdateSchema)
     @blp.response(200, ItemSchema)
     def put(self,item_data,item_id):
@@ -46,7 +46,7 @@ class Item(MethodView):
     def get(self):
         return ItemModel.query.all()
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.response(201, ItemSchema)
     @blp.arguments(ItemSchema)
     def post(self, item_data):

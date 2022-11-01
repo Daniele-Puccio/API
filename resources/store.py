@@ -17,7 +17,7 @@ class Store(MethodView):
         store = StoreModel.query.get_or_404(store_id)
         return store
     
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(self, store_id):
         store = StoreModel.query.get_or_404(store_id)
         db.session.delete(store)
@@ -32,7 +32,7 @@ class Store(MethodView):
     def get(self):
         return StoreModel.query.all()
 
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.response(201,StoreSchema)
     @blp.arguments(StoreSchema)
     def post(self,store_data):
