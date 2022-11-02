@@ -40,8 +40,8 @@ class Item(MethodView):
 
 
 @blp.route("/item")
-@jwt_required()
 class Item(MethodView):
+    @jwt_required()
     @blp.response(200, ItemSchema(many=True))
     def get(self):
         return ItemModel.query.all()
