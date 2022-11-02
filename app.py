@@ -14,7 +14,7 @@ from resources.tag import blp as TagBlueprint
 from resources.user import blp as UserBlueprint
 
 
-def create_app(db_url="sqlite:///data.db"):
+def create_app(db_url=None):
     app = Flask(__name__)
 
     app.config["PROPAGATE_EXCEPTIONS"] = True
