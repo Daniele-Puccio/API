@@ -44,3 +44,6 @@ class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     username = fields.String(Required=True)
     password = fields.String(Required=True,load_only=True)
+
+class UserRegisterSchema(UserSchema):
+    email=fields.Str(Required=True)
